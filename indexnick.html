@@ -334,12 +334,12 @@ return initURL;
 
 
 //
-function initPaginator(URL,json) {
+function initPaginator(_URL,json) {
 $('ul.pagination').empty();
 var htmlFrag='';
 var j=1;
-$('#query_history').append(URL);
-var theString = URL;
+$('#query_history').append(_URL);
+var theString = _URL;
 var theStringMinusOne = theString.substring(0, theString.length-1);
 
   if(json.total_hits >20){
@@ -351,11 +351,11 @@ var theStringMinusOne = theString.substring(0, theString.length-1);
       if(j<16){
 
                 if (j===1) {
-                   htmlFrag += '<li class="regular page-item active"><a ' + ' href="' + URL + '"  class="page-link regpage">'  +j+  '</a></li>';
-                  // console.log("URL++++++1",URL);
+                   htmlFrag += '<li class="regular page-item active"><a ' + ' href="' + _URL + '"  class="page-link regpage">'  +j+  '</a></li>';
+                  // console.log("_URL++++++1",_URL);
                 } else {
                    htmlFrag += '<li class="regular page-item"><a ' + ' href="' + theStringMinusOne + (j*20-20) + '"  class="page-link regpage">'  +j+  '</a></li>';
-                 //  console.log("URL++++++2",theStringMinusOne + (j*20-20) );
+                 //  console.log("_URL++++++2",theStringMinusOne + (j*20-20) );
                 }
                 j++;
        }         
@@ -428,10 +428,10 @@ function get_current_facet_history(){
 
 
 //
-function replaceFacets(json,URL) {
+function replaceFacets(json,_URL) {
   $('#facets').empty();
-  $('#facets').append('<h6>Refine your search</h6>' + displayFacets(json,URL));
-}//function replacefacets(baseURL,current_facets) {  
+  $('#facets').append('<h6>Refine your search</h6>' + displayFacets(json,_URL));
+}//function replacefacets(base_URL,current_facets) {  
 
 
 //
@@ -472,22 +472,22 @@ var isEmpty=true;
 }//function search_facet_history( str ){    
 
 //
-function initPaginator4Facets(URL,json, moretext) {
+function initPaginator4Facets(_URL,json, moretext) {
 $('ul.pagination').empty();
 var htmlFrag='';
 var j=1;
-//console.log("URL++++++",URL);
-console.log("#facet_history > ul').append('<li>' + ",URL);
+//console.log("_URL++++++",_URL);
+console.log("#facet_history > ul').append('<li>' + ",_URL);
 var prev_entry=search_facet_history(  moretext );
 
 if(!prev_entry){
 //$('span.limits').show();
-$('#facet_history > ul').append('<li>' + '<p class="hideme">'+ URL +'</p>' + '<span>'+ moretext+'</span>' + '<button type="button" class="close2" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + '</li>');
+$('#facet_history > ul').append('<li>' + '<p class="hideme">'+ _URL +'</p>' + '<span>'+ moretext+'</span>' + '<button type="button" class="close2" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + '</li>');
 }
 
 display_facet_history();
-var theString = URL;
-var res = URL.replace("&start=0", "");
+var theString = _URL;
+var res = _URL.replace("&start=0", "");
 
   if(json.total_hits >20){
           htmlFrag+='<li class="prev page-item  li_prevdisabled"><a class="page-link prevpage">Previous</a></li>';
@@ -495,11 +495,11 @@ var res = URL.replace("&start=0", "");
                 if(j<16){
 
                           if (j===1) {
-                             htmlFrag += '<li class="regular page-item active"><a ' + ' href="' + URL + '"  class="page-link regpage">'  +j+  '</a></li>';
-                            // console.log("URL++++++11",URL);
+                             htmlFrag += '<li class="regular page-item active"><a ' + ' href="' + _URL + '"  class="page-link regpage">'  +j+  '</a></li>';
+                            // console.log("_URL++++++11",_URL);
                           } else {
                              htmlFrag += '<li class="regular page-item"><a ' + ' href="' + res + '&start=' + (j*20-20) + '"  class="page-link regpage">'  +j+  '</a></li>';
-                            // console.log("URL++++++22",res + (j*20-20) );
+                            // console.log("_URL++++++22",res + (j*20-20) );
                           }
                           j++;
                  }         
@@ -580,8 +580,8 @@ function justItems(itemslist) {
 //http://localhost/rwd/indexnick.html
 
 //https://hartford.bibliovation.com/
-function updateTitlesOnly(URL) {//startvalue > 0
-  $.getJSON(URL+"&callback=?" ,function(json){
+function updateTitlesOnly(_URL) {//startvalue > 0
+  $.getJSON(_URL+"&callback=?" ,function(json){
   //console.log(json);
   $('#titles').empty();
   $('#search_stats').empty();
@@ -626,8 +626,8 @@ var thisURL= 'https://hartford.bibliovation.com/api/opac/(' + querystr + ')' +  
 //https://waldo.sandbox.kohalibrary.com/api/opac/eros?facet.field=pubyear&facet.limit=20&facet.offset=0&facet.sort=count&rows=0
 
 //
-function displayFacets(data,URL) {
-  console.log("bigURLbigURLbigURL",URL);
+function displayFacets(data,_URL) {
+  console.log("big_URLbig_URLbig_URL",_URL);
 //https://hartford.bibliovation.com/api/opac/(eros)?count=20&embed=20&facet.field=owned-by&facet.field=collection&facet.field=author-display&facet.field=topic_facet&facet.field=pubyear&facet.field=language&facet.field=geo_facet&fq=lost:*&spellcheck=true&spellcheck.collate=true&spellcheck.count=10&spellcheck.maxCollations=10&start=0  
     var htmlFrag='';
     var newURL='';
@@ -649,21 +649,21 @@ function displayFacets(data,URL) {
 
 
 
-function retrieve_search_results_complete(URL,src, moretext) {//startvalue =0
- $.getJSON(URL+"&callback=?" ,function(json){
-  console.log("retrieve_search_results_complete(URL,src, moretext)",json);
+function retrieve_search_results_complete(_URL,src, moretext) {//startvalue =0
+ $.getJSON(_URL+"&callback=?" ,function(json){
+  console.log("retrieve_search_results_complete(_URL,src, moretext)",json);
 
 if(src ==='Facets'){
-  console.log("initPaginator4Facets(URL,json)");
-    initPaginator4Facets(URL,json,moretext);
+  console.log("initPaginator4Facets(_URL,json)");
+    initPaginator4Facets(_URL,json,moretext);
 }else{
     $('#query_history').empty();
-    initPaginator(URL,json);
+    initPaginator(_URL,json);
 }//if(src ==='Facets'){
 
-  updateTitlesOnly(URL);
+  updateTitlesOnly(_URL);
   $('#facets').empty();
-  $('#facets').append('<h6>Refine your search</h6>' + displayFacets(json,URL));
+  $('#facets').append('<h6>Refine your search</h6>' + displayFacets(json,_URL));
   //window.location.href = window.location.href + separator + "ts=true"; retrieve_search_results_complete
  // window.location.href = window.location.href + '?search/' + $('#you_searched_for p').text();
  });//$.getJSON(
@@ -694,17 +694,17 @@ if(src ==='Facets'){
 
   $("#go").click(function(e){
     $('#srp_results').show();
-    var URL='';  
+    var _URL='';  
     e.preventDefault();
     console.log("#go - just clicked");
     $('#homepage').hide();
     $('#you_searched_for').empty();
     $('#copyURL').empty();
-    URL=GetInputQuery();
+    _URL=GetInputQuery();
     // 'http://localhost/karpov3/?search/' + $('#userinputquery').val()
     $('#query_history').empty();
     $('#facet_history ul').empty();
-    retrieve_search_results_complete(URL,"NotFacets");
+    retrieve_search_results_complete(_URL,"NotFacets");
     //https://libweb.hartford.edu/koha/rwd/   //http://localhost/karpov3/
     $('#copyURL').append('<button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="' + 'https://libweb.hartford.edu/koha/rwd2/?search/' + $('#userinputquery').val() +'">Want a link to this page? ( Does not include facets yet )</button>');
     $('[data-toggle="popover"]').popover();
