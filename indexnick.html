@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://v4-alpha.getbootstrap.com/assets/js/vendor/tether.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <script src="bootstrap-slider.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap-slider.css">
+ 
+    <style>
+      ol li{
+      list-style-type: none;
+      color:red;
+      }
+
+      #facets li{
+      font-size: 14px;
+      line-height: 1.428;
+      }
+
+      #query_history, .this_fq{
+      font-size: 9px;
+      }
+
+      .this_fq{
+      display: none;
+      }
+
+      a.navbar-brand{
+        color: red !important;
+      }
+
+      #pt, #search_stats, #pb{
+       margin-left: 40px !important;
+       margin-top: 8px  !important;
+      }
+
+#query_history {
+    display:none;
+}
+
+button.close2 {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+}
+
+.close2 {
+    /* float: right; */
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+}
+
+span.historystack{
+  display: none;
+}
+
+span.limits{
+  display: none;
+}          
+
+p.hideme{
+  font-size: 10px;
+  display: none;
+}
+
+#ex1Slider .slider-selection {
+  background: #BABABA;
+}
+
+#ex6CurrentSliderValLabel{
+  margin-left: 10px;
+}
+
+.slider.slider-horizontal{
+  width:400px; /* sample value - set it as you like*/
+}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Expand at md</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarsExample04">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#" id="homeclick">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown04">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <div id="rwd-search-form">
+        <form class="navbar-form form-inline" id="target">
+          <div class="form-group">
+            <select class="form-control" id="selone" name="selgrp1">
+              <option value="0" selected="">Keywords</option>
+              <option value="1">Title</option>
+              <option value="2">Author</option>
+              <option value="3">Subject</option>
+              <option value="4">ISBN</option>
+              <option value="5">Series</option>
+              <option value="6">Call Number</option>
+              <!--       <option value="7">Concept</option>
+              <option value="8">All-language Keyword</option> -->
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <select class="form-control" id="seltwo">
+              <option value="0">Any format</option>
+              <option value="1">Books (All)</option><!-- fq=collection:BOOK%20OR%20collection:THESES -->
+              <option value="2">...just Theses/Dissertations</option><!-- fq=collection:THESES -->
+              <option value="3">Printed Music (All)</option><!-- fq=collection:SCORES%20OR%20itemtype:SCORECD -->
+              <option value="4">...just Scores</option><!-- fq=itemtype:MINISCORE%20OR%20itemtype:MINISCORE4%20OR%20itemtype:SC%20OR%20itemtype:SCORE%20OR%20itemtype:SCORE4%20OR%20itemtype:SCORENC%20OR%20itemtype:SCPT%20OR%20itemtype:SCPTNC%20OR%20itemtype:VSCORE%20OR%20itemtype:VSCORE4%20OR%20itemtype:VSCORENC%20OR%20itemtype:SCORECD -->
+              <option value="5">...just Parts</option><!-- fq=itemtype:PARTS%20OR%20itemtype:PARTS4%20OR%20itemtype:PARTSNC%20OR%20itemtype:SC%20OR%20itemtype:SCPT%20OR%20itemtype:SCPT4%20OR%20itemtype:SCPTNC%20OR%20itemtype:HARTTORCH -->
+              <option value="6">Sound Recordings (All)</option><!-- fq=collection:AUDIOCD%20OR%20collection:LPS%20OR%20collection:AUDIOCASSE%20OR%20collection:MIXEDMEDIA%20OR%20itemtype:SCORECD -->
+              <option value="7">...just CDs</option><!-- fq=collection:AUDIOCD%20OR%20itemtype:SCORECD -->
+              <option value="8">...just LPs</option><!-- fq=collection:LPS -->
+              <option value="9">Videos (All)</option><!-- fq=collection:DVD%20OR%20collection:VHS%20OR%20collection:MIXEDMEDIA -->
+              <option value="10">...just DVDs</option><!-- fq=collection:DVD -->
+              <option value="11">...just VHS</option><!-- fq=collection:VHS -->
+              <option value="12">Periodicals</option><!-- fq=collection:PERIODICAL%20OR%20collection:NEWSPAPERS -->
+              <option value="13">Electronic Resources</option><!-- fq=collection:E-RESOURCE%20OR%20itemtype:ELECRES -->
+              <option value="14">Mortensen Reserves</option><!-- fq=location:RESERVES%20AND%20on-shelf-at:MORTENSEN -->
+              <option value="15">Allen Reserves</option><!-- fq=location:RESERVES%20AND%20on-shelf-at:ALLEN -->
+              <option value="16">Curriculum Lab</option><!-- fq=location:CURRLAB -->
+              <option value="17">Judaica Collection</option><!-- fq=location:JUDAICA%20OR%20location:JUDOVER -->
+              <option value="18">Hartt Performance Library</option><!-- fq=on-shelf-at:PERFLIB -->
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <input type="input" class="form-control" id="userinputquery" name="userinputquerytext" value="" placeholder="Enter search terms">
+          </div>
+          
+          <div class="form-group">
+            <button type="submit" class="btn btn-default" id="go">GO</button>
+            <button type="reset" class="btn btn-default" id="clr">Clear All</button>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+
+   
+<div class="container-fluid" id="mc">
+
+  <div class="row" id="homepage">
+    <div class="col-lg-9">
+            
+        <h3 class="text-left">Welcome to the Library Catalog</h3>
+          <p class="text-left home_page_text">To get started, just fill in the blank on the search bar above with what you want to find and click GO. If there is something specific that you wish to find, like an author or a title, you can use the "Keyword" dropdown menu to select a specific area.
+          </p>
+
+<p class="text-left">You can also use the format dropdown menu to search particular types of items - like books, periodicals, or CDs - or search for items in specific collections.  For even more specific searching, use the <a href="http://hartford.waldo.kohalibrary.com/app/search">advanced search</a> feature to help narrow in on what you are looking for.</p>
+
+<p class="text-left"><a href="/app/me/summary">Log in</a> if you want to see what you have checked out and to manage your account.</p>
+
+  <p class="text-left">And as always, we are here to help you!  Stop by the <a href="http://library.hartford.edu/about_libraries/floorplans.aspx">reference desk</a> or <a href="http://library.hartford.edu/get_help/ask_a_librarian.aspx">contact us</a> if you aren't finding what you need.</p>
+
+ <p>
+<input id="ex6" type="text" data-slider-min="2008" data-slider-max="2018" data-slider-step="1" data-slider-value="2013" data-slider-ticks-labels="medium" />
+<span id="ex6CurrentSliderValLabel"> Current Slider Value: <span id="ex6SliderVal">2013</span></span>
+<!-- <span id="ex6CurrentSliderValLabel"> Current Slider Value: <span id="ex6SliderVal">2013</span></span> -->
+
+ </p>
+
+<!-- Chat window inline -->
+      <script type="text/javascript" src="//v2.libanswers.com/load_chat.php?hash=d42bbc2bfba13940954b7503e455c594"></script>
+<!-- Chat window inline -->
+
+    </div>
+
+    <div class="col-lg-3">
+      <h3>Right Column</h3>       
+      <div class="col-lg-8"> 
+      <p><button type="button" class="btn btn-primary btn-block">Account & Renew</button></p>
+      <p><button type="button" class="btn btn-primary btn-block">Account & Renew</button></p>
+    </div>
+    </div>
+  </div>
+
+
+  <div id="srp_results" class="row">
+
+
+       <div class="col-lg-2">
+           <div id="facets"></div>
+       </div>
+
+       <div class="col-lg-10">
+        <div id="copyURL"></div>
+          <div id="you_searched_for"></div>
+          
+          <div id="query_history"></div>
+          <div id="facet_history"><ul></ul></div>
+          <div id="limits"><span class="limits">Limited to:</span><ul id="facet_history2"></ul></div>
+          <div id="search_stats"></div>
+          <ul id="pt" class="pagination"></ul>
+          <div id="titles"></div>
+          <ul id="pb" class="pagination"></ul>
+      </div>   
+
+
+  </div> <!-- <div id="srp_results" class="row"> -->
+
+
+</div><!-- <div class="container-fluid" id="mc"> -->
+
+
+  </body>
+<script>
+
+  //This Javascript file is needed for Masthead Searches. This works in tandem with HTML code located in logo.html
+  /*
+  <!-- Begin Masthead Searches Below This Line -->
+  <div id="rwd-search-form">
+    HTML code is located here and is found in logo.html
+    </div><!-- <div id="rwd-search-form"> -->
+    <!-- End Masthead Searches above This Line -->
+    */
+//Define first <SELECT> Options
+  var selone_arr = {
+  "0": "",
+  "1": "title:",
+  "2": "author:",
+  "3": "subject:",
+  "4": "isbn:",
+  "5": "series-title:",
+  "6": "callnumber:",
+  "7": "concept:",
+  "8": "text-fl:"
+  };
+  //Define second <SELECT> Options
+    var seltwo_arr = {
+    "0": "",
+    "1": "?fq=collection:BOOK%20OR%20collection:THESES",
+    "2": "?fq=collection:THESES",
+    "3": "?fq=collection:SCORES%20OR%20itemtype:SCORECD",
+    "4": "?fq=itemtype:MINISCORE%20OR%20itemtype:MINISCORE4%20OR%20itemtype:SC%20OR%20itemtype:SCORE%20OR%20itemtype:SCORE4%20OR%20itemtype:SCORENC%20OR%20itemtype:SCPT%20OR%20itemtype:SCPTNC%20OR%20itemtype:VSCORE%20OR%20itemtype:VSCORE4%20OR%20itemtype:VSCORENC%20OR%20itemtype:SCORECD",
+    "5": "?fq=itemtype:PARTS%20OR%20itemtype:PARTS4%20OR%20itemtype:PARTSNC%20OR%20itemtype:SC%20OR%20itemtype:SCPT%20OR%20itemtype:SCPT4%20OR%20itemtype:SCPTNC%20OR%20itemtype:HARTTORCH",
+    "6": "?fq=collection:AUDIOCD%20OR%20collection:LPS%20OR%20collection:AUDIOCASSE%20OR%20collection:MIXEDMEDIA%20OR%20itemtype:SCORECD",
+    "7": "?fq=collection:AUDIOCD%20OR%20itemtype:SCORECD",
+    "8": "?fq=collection:LPS",
+    "9": "?fq=collection:DVD%20OR%20collection:VHS%20OR%20collection:MIXEDMEDIA",
+    "10": "?fq=collection:DVD",
+    "11": "?fq=collection:VHS",
+    "12": "?fq=collection:PERIODICAL%20OR%20collection:NEWSPAPERS",
+    "13": "?fq=collection:E-RESOURCE%20OR%20itemtype:ELECRES",
+    "14": "?fq=location:RESERVES%20AND%20on-shelf-at:MORTENSEN",
+    "15": "?fq=location:RESERVES%20AND%20on-shelf-at:ALLEN",
+    "16": "?fq=location:CURRLAB",
+    "17": "?fq=location:JUDAICA%20OR%20location:JUDOVER",
+    "18": "?fq=on-shelf-at:PERFLIB"
+  };
+    //7 = ...just CDs  
+$(document).ready(function(){
+
+
+// With JQuery
+$("#ex6").slider();
+$("#ex6").on("slide", function(slideEvt) {
+  $("#ex6SliderVal").text(slideEvt.value);
+  var sliderval2= $('#ex6').data('slider').getValue();
+  console.log( "sliderval",sliderval2);  
+});
+
+//$("#ex6").getValue();
+//getValue
+var sliderval= $('#ex6').data('slider').getValue();
+console.log( "sliderval",sliderval);
+
+//
+function KOHAfix(str) {
+str=str.trim();
+console.log( "str=str.trim()",str );
+str=str.replace(/[=:;|&!'()/]/g, '').replace(/[?]/g, '%3F').trim();
+console.log( "FINAL for SOLR str=",str );
+return str;
+}//eof KOHAfix(str)
+
+//
+function GetInputQuery() {
+var initURL='';  
+var seloneFT = selone_arr[$('#selone').find("option:selected").val()];  //Ex. "series-title:"
+//console.log("seloneFT",seloneFT);
+var userinputqueryFT= $('#userinputquery').val();
+//console.log("userinputqueryFT",userinputqueryFT);
+if( userinputqueryFT.length === 0 ) {
+userinputqueryFT="*";
+}else{
+userinputqueryFT= KOHAfix(userinputqueryFT);  //Fix the user input query string before passing it to Solr
+console.log("userinputqueryFT",userinputqueryFT);
+}//if
+var seltwoFT = seltwo_arr[$('#seltwo').find("option:selected").val()]; //Ex. "?fq=collection:THESES"
+//console.log("seltwoFT",seltwoFT);
+var theDomain= 'https://hartford.bibliovation.com/'; // or var theDomain ='';  use '' in production
+var url4Solr= theDomain + 'api/opac/' + seloneFT + '(' + userinputqueryFT  + ')' + seltwoFT;
+$('#you_searched_for').append('<p>'+ 'You searched for: ' + userinputqueryFT + '</p>');//you_searched_for
+var startvalue=0;
+var extended_params="?count=20&embed=20&facet.field=owned-by&facet.field=collection&facet.field=author-display&facet.field=topic_facet&facet.field=pubyear&facet.field=language&facet.field=geo_facet&fq=lost:*&spellcheck=true&spellcheck.collate=true&spellcheck.count=10&spellcheck.maxCollations=10&start=0";
+initURL=url4Solr + extended_params;
+return initURL;
+}//function GetInputQuery() {
+
+
+//
+function initPaginator(URL,json) {
+$('ul.pagination').empty();
+var htmlFrag='';
+var j=1;
+$('#query_history').append(URL);
+var theString = URL;
+var theStringMinusOne = theString.substring(0, theString.length-1);
+
+  if(json.total_hits >20){
+
+        htmlFrag+='<li class="prev page-item  li_prevdisabled"><a class="page-link prevpage">Previous</a></li>';
+
+     for (i = 0; i <  Math.ceil(json.total_hits/20); i++) {
+
+      if(j<16){
+
+                if (j===1) {
+                   htmlFrag += '<li class="regular page-item active"><a ' + ' href="' + URL + '"  class="page-link regpage">'  +j+  '</a></li>';
+                  // console.log("URL++++++1",URL);
+                } else {
+                   htmlFrag += '<li class="regular page-item"><a ' + ' href="' + theStringMinusOne + (j*20-20) + '"  class="page-link regpage">'  +j+  '</a></li>';
+                 //  console.log("URL++++++2",theStringMinusOne + (j*20-20) );
+                }
+                j++;
+       }         
+
+     }//for i
+
+htmlFrag += '<li class="next page-item"><a class="page-link nextpage">Next</a></li>'; 
+
+   }//if(data.total_hits >20){
+
+ $('ul.pagination').append(htmlFrag);
+
+$( "ul.pagination li" ).on( "click", "a.prevpage", function(e) {
+console.log("PPPa.regpage - just clicked");
+alert("Previous - just clicked");
+});         
+
+$( "ul.pagination li" ).on( "click", "a.regpage", function(e) {
+e.preventDefault();  
+//console.log("a.regpage - just clicked");
+var thisURL= $(this).attr("href");
+var curr_start=$(this).text();
+console.log("update titles");
+
+$('li.regular').removeClass('active');
+$(this).parent().addClass('active');
+//console.log( "update titles22", $(this).parent().index() );
+
+var theID= $(this).parent().parent().attr('id');
+//console.log(theID);
+
+  if($(this).parent().parent().attr('id') ==='pt'){
+    console.log("TOP", theID);
+    $('ul#pb li').eq($(this).parent().index()).addClass("active");
+    }else{
+    $('ul#pt li').eq($(this).parent().index()).addClass("active");
+    console.log("BOT", theID);
+  }
+
+updateTitlesOnly(thisURL);
+});       
+
+$( "ul.pagination li" ).on( "click", "a.nextpage", function() {
+console.log("NNN.regpage - just clicked");
+//alert("Next - just clicked");
+});    
+
+}//function initPaginator(data) {  
+
+
+function display_facet_history(){
+    //console.log( "function display_facet_historyB()", str);
+        $('#facet_history li > span').each(function(i,v) {
+         console.log( i, $(this).text(), v );
+        });  
+}//function display_facet_history(){  
+
+//
+function get_current_facet_history(){
+  var facetstr='';
+    //console.log( "function display_facet_historyB()", str);
+        $('#facet_history li > span').each(function(i,v) {
+         console.log( i, $(this).text(), v );
+         facetstr+=$(this).text();
+        });  
+        console.log("get_current_facet_history", facetstr);
+        console.log( "query_historyquery_historyquery_history" ,   $('#query_history').text() );
+        facetPop($('#query_history').text(), facetstr);
+}//function display_facet_history(){  
+
+
+//
+function replaceFacets(json,URL) {
+  $('#facets').empty();
+  $('#facets').append('<h6>Refine your search</h6>' + displayFacets(json,URL));
+}//function replacefacets(baseURL,current_facets) {  
+
+
+//
+function facetPop(baseURL,current_facets) {
+console.log( "FacetPop(URL,json, moretext)" , baseURL,current_facets );
+
+     $.getJSON(baseURL+current_facets+"&callback=?" ,function(json){
+      console.log(json);
+      replaceFacets(json,baseURL);
+      $('#search_stats').empty();
+      $('#search_stats').append(displayStats(json));
+      $('#titles').empty();
+      $('#query_history').empty();
+       var htmlFrag='<ol>';
+          for (i = 0; i < json.hits.length; i++) {
+           htmlFrag +='<li>' +  json.hits[i].title + '</li>';
+          }
+          htmlFrag +='</ol>';
+      $('#titles').append(htmlFrag);
+      initPaginator(baseURL,json);
+     });//$.getJSON(
+
+}//function FacetPop(URL,json, moretext) {  
+
+//
+function search_facet_history( str ){  
+console.log("search_facet_history-str=",str );  
+var hasPrevEntry=false;
+var isEmpty=true;
+ $('#facet_history li > span').each(function(i,v) {
+    console.log("search_facet_history",$(this).text() );
+    if( $(this).text() === str){
+    hasPrevEntry=true;
+    isEmpty=false;
+    }  
+ });
+ return hasPrevEntry;
+}//function search_facet_history( str ){    
+
+//
+function initPaginator4Facets(URL,json, moretext) {
+$('ul.pagination').empty();
+var htmlFrag='';
+var j=1;
+//console.log("URL++++++",URL);
+console.log("#facet_history > ul').append('<li>' + ",URL);
+var prev_entry=search_facet_history(  moretext );
+
+if(!prev_entry){
+//$('span.limits').show();
+$('#facet_history > ul').append('<li>' + '<p class="hideme">'+ URL +'</p>' + '<span>'+ moretext+'</span>' + '<button type="button" class="close2" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + '</li>');
+}
+
+display_facet_history();
+var theString = URL;
+var res = URL.replace("&start=0", "");
+
+  if(json.total_hits >20){
+          htmlFrag+='<li class="prev page-item  li_prevdisabled"><a class="page-link prevpage">Previous</a></li>';
+               for (i = 0; i <  Math.ceil(json.total_hits/20); i++) {
+                if(j<16){
+
+                          if (j===1) {
+                             htmlFrag += '<li class="regular page-item active"><a ' + ' href="' + URL + '"  class="page-link regpage">'  +j+  '</a></li>';
+                            // console.log("URL++++++11",URL);
+                          } else {
+                             htmlFrag += '<li class="regular page-item"><a ' + ' href="' + res + '&start=' + (j*20-20) + '"  class="page-link regpage">'  +j+  '</a></li>';
+                            // console.log("URL++++++22",res + (j*20-20) );
+                          }
+                          j++;
+                 }         
+               }//for i
+          htmlFrag += '<li class="next page-item"><a class="page-link nextpage">Next</a></li>'; 
+  }//if(data.total_hits >20){
+
+$('ul.pagination').append(htmlFrag);
+$( "ul.pagination li" ).on( "click", "a.prevpage", function() {
+console.log("PPPa.regpage - just clicked");
+alert("Previous - just clicked");
+});         
+
+$( "ul.pagination li" ).on( "click", "a.regpage", function(e) {
+e.preventDefault();  
+console.log("a.regpage - just clicked555");
+console.log("a.regpage - just clicked556", $(this).parent().parent().attr('id'));
+
+/*  if($(this).parent().parent().attr('id') ==='pt'){
+    console.log("TOP", theID);
+    $('ul#pb li').eq($(this).parent().index()).addClass("active");
+    }else{
+    $('ul#pt li').eq($(this).parent().index()).addClass("active");
+    console.log("BOT", theID);
+  }*/
+
+
+var thisURL= $(this).attr("href");
+var curr_start=$(this).text();
+$('li.regular').removeClass('active');
+$(this).parent().addClass('active');
+updateTitlesOnly(thisURL);
+});       
+
+$( "ul.pagination li" ).on( "click", "a.nextpage", function() {
+console.log("NNN.regpage - just clicked");
+alert("Next - just clicked");
+});    
+
+ $( "#facet_history ul li" ).on( "click", "button", function(e) {
+     console.log( "CLOSE THISPPPP", $( this ).parent() );
+     $( this ).parent().remove();
+     console.log( "CLOSE THIS", $( this ).parent().children().first().text()  );
+     get_current_facet_history();
+});  
+
+}//function initPaginator4Facets(data) {  
+
+//
+function displayStats(json) {
+var htmlFrag='';
+var firstresult=parseInt(json.start)+1;
+var lastresult=firstresult+20-1;
+
+if(json.total_hits ===1){
+  alert("Transfer to the BIB detail record here, since one result only. Ignore the search page right now, we are done here. Please refresh the browser for more testing.");
+//maybe some housekeeping here
+return;
+}
+
+if(json.total_hits < lastresult)lastresult=json.total_hits;
+
+if(lastresult > 0){
+var blurb='';
+if(json.total_hits >300 )blurb= ' (Displaying first 300 results. Please refine your search)'; 
+htmlFrag= 'Displaying results '  +   firstresult +  ' to ' +  lastresult + ' of ' + json.total_hits + blurb;
+}else{
+htmlFrag= 'No results found';  
+}
+return htmlFrag;
+}//function displayStats(data) {  
+
+function justItems(itemslist) {
+      for (j = 0; j < itemslist.length; j++) {
+       console.log("justItems", itemslist[j], itemslist.length );
+      }//for j
+}//function justItems(URL) {//startvalue > 0
+//http://localhost/rwd/indexnick.html
+
+//https://hartford.bibliovation.com/
+function updateTitlesOnly(URL) {//startvalue > 0
+  $.getJSON(URL+"&callback=?" ,function(json){
+  //console.log(json);
+  $('#titles').empty();
+  $('#search_stats').empty();
+      var htmlFrag='<ol>';
+      for (i = 0; i < json.hits.length; i++) {
+       console.log(json.hits[i]._embed.summary.items_at);
+       var items4title=justItems(json.hits[i]._embed.summary.items_at);
+
+       htmlFrag +='<li>' +  json.hits[i].title + '</li>';
+      }
+      htmlFrag +='</ol>';
+  $('#titles').append(htmlFrag);
+  $('#search_stats').append(displayStats(json));
+  });//$.getJSON(
+}//function retrieve_search_results() {
+
+function get_search_results_from_URL(querystr) {//startvalue =0  this querystr looks like eros which is wrong
+var thisURL= 'https://hartford.bibliovation.com/api/opac/(' + querystr + ')' +  '?count=20&embed=20&facet.field=owned-by&facet.field=collection&facet.field=author-display&facet.field=topic_facet&facet.field=pubyear&facet.field=language&facet.field=geo_facet&fq=lost:*&spellcheck=true&spellcheck.collate=true&spellcheck.count=10&spellcheck.maxCollations=10&start=0';
+
+   console.log("URL",querystr);
+   console.log("thisURL",thisURL);
+  $.getJSON(thisURL + '&callback=?' ,function(json){
+       console.log(json);   
+            $('#homepage').hide();
+            $('#titles').empty();     
+            $('#search_stats').empty();
+            $('#you_searched_for').empty();
+            $('#you_searched_for').append('<p>'+ 'You searched for: ' + res + '</p>');//you_searched_for          
+               var htmlFrag='<ol>';
+                for (i = 0; i < json.hits.length; i++) {
+                 htmlFrag +='<li>' +  json.hits[i].title + '</li>';
+                }
+                htmlFrag +='</ol>';
+            $('#titles').append(htmlFrag);     
+            initPaginator(thisURL ,json);
+            $('#search_stats').append(displayStats(json)); 
+            $('#facets').empty();
+
+            $('#facets').append('<h6>Refine your search</h6>' + displayFacets(json,thisURL));
+  });   
+}  
+//https://waldo.sandbox.kohalibrary.com/api/opac/eros?facet.field=pubyear&facet.limit=20&facet.offset=0&facet.sort=count&rows=0
+
+//
+function displayFacets(data,URL) {
+  console.log("bigURLbigURLbigURL",URL);
+//https://hartford.bibliovation.com/api/opac/(eros)?count=20&embed=20&facet.field=owned-by&facet.field=collection&facet.field=author-display&facet.field=topic_facet&facet.field=pubyear&facet.field=language&facet.field=geo_facet&fq=lost:*&spellcheck=true&spellcheck.collate=true&spellcheck.count=10&spellcheck.maxCollations=10&start=0  
+    var htmlFrag='';
+    var newURL='';
+    var newURLfinal='';
+    var encURL='';
+    for (i = 0; i < data.facets.length; i++) {
+    htmlFrag += '<h6' + ' id="' + data.facets[i].display +  '">' + data.facets[i].display + '</h6>';
+    htmlFrag +='<ul>';
+      for (j = 0; j < data.facets[i].values.length; j++) {
+      encURL=encodeURIComponent(data.facets[i].values[j].value);
+      newURL='&fq=' + data.facets[i].values[j].field + ':(' + encURL + ')';
+      newURLfinal=URL +  newURL;
+      htmlFrag += '<li class="' + data.facets[i].field +  '">' + '<a href="' + newURLfinal + '">' +  data.facets[i].values[j].display_value + '</a>' + ' (' + data.facets[i].values[j].count + ')' + '<span class="this_fq">' + '&fq=' + data.facets[i].field + ':(' + encodeURIComponent(data.facets[i].values[j].value) + ')' + '</span>' +  '</li>';
+      }
+    htmlFrag +='</ul>';
+    }
+    return htmlFrag;
+}//function displayFacets(data) {    
+
+
+
+function retrieve_search_results_complete(URL,src, moretext) {//startvalue =0
+ $.getJSON(URL+"&callback=?" ,function(json){
+  console.log("retrieve_search_results_complete(URL,src, moretext)",json);
+
+if(src ==='Facets'){
+  console.log("initPaginator4Facets(URL,json)");
+    initPaginator4Facets(URL,json,moretext);
+}else{
+    $('#query_history').empty();
+    initPaginator(URL,json);
+}//if(src ==='Facets'){
+
+  updateTitlesOnly(URL);
+  $('#facets').empty();
+  $('#facets').append('<h6>Refine your search</h6>' + displayFacets(json,URL));
+  //window.location.href = window.location.href + separator + "ts=true"; retrieve_search_results_complete
+ // window.location.href = window.location.href + '?search/' + $('#you_searched_for p').text();
+ });//$.getJSON(
+}//function retrieve_search_results() {
+
+
+ $( "#facets" ).on( "click", "li > a", function(e) {
+   e.preventDefault();
+   retrieve_search_results_complete(this.href,"Facets", $(this).parent().find("span").text());
+ }); 
+
+  $('#selone').on('change', function() {
+  console.log( this.value );
+  });
+
+  $('#seltwo').on('change', function() {
+  console.log( this.value );
+  });
+
+  
+
+  $("#homeclick").click(function(e){
+   $('#homepage').show();
+   $('#srp_results').hide();
+  });
+
+
+
+  $("#go").click(function(e){
+    $('#srp_results').show();
+    var URL='';  
+    e.preventDefault();
+    console.log("#go - just clicked");
+    $('#homepage').hide();
+    $('#you_searched_for').empty();
+    $('#copyURL').empty();
+    URL=GetInputQuery();
+    // 'http://localhost/karpov3/?search/' + $('#userinputquery').val()
+    $('#query_history').empty();
+    $('#facet_history ul').empty();
+    retrieve_search_results_complete(URL,"NotFacets");
+    //https://libweb.hartford.edu/koha/rwd/   //http://localhost/karpov3/
+    $('#copyURL').append('<button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="' + 'https://libweb.hartford.edu/koha/rwd2/?search/' + $('#userinputquery').val() +'">Want a link to this page? ( Does not include facets yet )</button>');
+    $('[data-toggle="popover"]').popover();
+    //$('#copyURL button').popover('toggle');
+    console.log( $('#you_searched_for > p').text() );
+  });
+
+       var URLstr = window.location.href.toLowerCase();
+       var pos = URLstr.search("/?search/");  
+//http://localhost/karpov3/?search/we
+      if(pos>=0){
+        console.log(pos);
+        var res = URLstr.slice(pos+7);
+        console.log("res",res);
+        get_search_results_from_URL(res);
+      }
+
+
+
+});
+</script>
+  </html>
